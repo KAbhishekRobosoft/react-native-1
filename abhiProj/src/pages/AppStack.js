@@ -1,30 +1,33 @@
 import React from 'react'
+import Flex from './Flex'
+import FlatList from './FlatList'
 
 function AppStack() {
   return (
-    <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="Home"
-          component={Home}
-        />
-      
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="Login"
-          component={Login}
-        />
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="SignUp"
-          component={SignUp}
-        />
-        <Stack.Screen
-          options={{ headerShown: false }}
-          name="tabs"
-          component={Root}
-        />
-      </Stack.Navigator>
+    <Tab.Navigator initialRouteName="Flex">
+      <Tab.Screen
+        name="Flex"
+        component={Flex}
+        options={{
+          headerShown: false,
+          tabBarLabel: "Flex Box",
+          tabBarIcon: () => (
+            <Icon name="box" />
+          ),
+        }} />
+
+      <Tab.Screen
+         options={{
+          headerShown: false,
+          tabBarLabel: "FlatList",
+          tabBarIcon: () => (
+            <Icon name="list"  />
+          ),
+        }}
+        name="FlatList"
+        component={FlatList}
+      />
+    </Tab.Navigator>
   )
 }
 
