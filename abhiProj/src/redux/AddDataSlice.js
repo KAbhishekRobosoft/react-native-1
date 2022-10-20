@@ -32,11 +32,6 @@ const addSiteReducer = createSlice({
       return state.filter(item => item.id !== action.payload)
     },
 
-    filterData:(state,action)=>{
-       let arr= state.slice(0)
-       return arr.filter(ele => ele.siteName.toLowerCase().includes(action.payload))
-    }
-
   }})
 
 export const {addData,updateData,deleteData,filterData} = addSiteReducer.actions;

@@ -15,19 +15,21 @@ import {useDispatch, useSelector} from 'react-redux';
 import ListDisplay from '../component/ListDisplay';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { logout } from '../redux/AuthenticationSlice';
-import { filterData } from '../redux/AddDataSlice';
+
 
 function FlatList({navigation}) {
   const [text, setText] = useState(false);
-  const [search,setSearch]= useState('')
+  const [searchtext,setSearchText]= useState('')
+  const [search,setSearch]= useState(false) 
   const dispatch= useDispatch()
   let data = useSelector(state => state.addDetails);
+
   function searchText(getinpText){
-      setSearch(getinpText)
+    setSearchText(getinpText)
   }
 
   function searchList(){
-    dispatch(filterData(search))
+    setSearch(true)
     setText(false)
   }
 
@@ -77,13 +79,13 @@ function FlatList({navigation}) {
       </View>
 
       <View style={styles.workCon}>
-        {!text && (
+        {!text && !search && (
           <View style={styles.txtView}>
             <Text style={styles.workText}>Sites</Text>
             <View style={styles.underLine}></View>
           </View>
         )}
-        {text && (
+        {text && !search && (
           <View style={styles.txtInpView}>
             <TextInput
               style={styles.txtInp}
@@ -92,6 +94,13 @@ function FlatList({navigation}) {
             />
             <Pressable onPress={searchList}>
               <Icon name="arrow-right" size={20} />
+            </Pressable>
+          </View>
+        )}
+        {search && (
+          <View style={styles.iconButView}>
+            <Pressable onPress={()=>setSearch(false)}>
+              <Icon name="arrow-left" size={20} />
             </Pressable>
           </View>
         )}
@@ -114,11 +123,21 @@ function FlatList({navigation}) {
 
       <View style={styles.listBack}>
         <ScrollView>
-          {data.length > 0 ?
+          {data.length > 0 && (!search) ?
             data.map(ele => {
             let img = ele.siteName.toLowerCase();
             return <ListDisplay navigation= {navigation} key={ele.id} img={img} ele={ele} />;
-          }):null}
+          }):
+            data.length > 0 && (search) ?
+            data.filter(ele => {
+                  console.log("hello"+searchtext)
+                  ele.siteName.toLowerCase().includes(searchtext.toLowerCase())
+            }).map(ele=>{
+              console.log(ele)
+              let img= ele.siteName.toLowerCase()
+              return <ListDisplay navigation= {navigation} key= {ele.id} img= {img} ele= {ele} />
+            }):null
+          }
         </ScrollView>
         <View style={styles.AddView}>
           <Pressable onPress={() => navigation.navigate('AddSite')}>
@@ -248,6 +267,10 @@ const styles = StyleSheet.create({
   searchView: {
     marginTop: Platform.OS === 'ios' ? 30 : 10,
     marginLeft: 60,
+  },
+
+  iconButView:{
+    justifyContent:"flex-start"
   },
 
   txtInp: {
