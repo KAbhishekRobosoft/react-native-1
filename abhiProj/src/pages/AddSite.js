@@ -8,16 +8,20 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import {Formik, Field} from 'formik';
-import Details from '../utils/Details';
-import DropDown from '../utils/DropDown';
-import PasswordInput from '../utils/PasswordInput';
-import EntryButton from '../utils/EntryButton';
+import CustomInput from '../component/CustomInput';
+import DropDown from '../component/DropDown'
+import EntryButton from '../component/CRUDButton'
 import {addData} from '../redux/AddDataSlice';
 import {useDispatch} from 'react-redux';
+import {images} from '../utils/HardCodedData'
+import PasswordToggleInput from '../component/PasswordToggleInput';
 
 function AddSite({navigation}) {
+
+//Used to call the action mentioned in the reducer
   const dispatch = useDispatch();
 
+//Sending the object received through form to add it to the state   
   function sendData(obj) {
     if (obj === initialValues) Toast.show('Please enter Values');
     else {
@@ -28,6 +32,7 @@ function AddSite({navigation}) {
     }
   }
 
+//Form initial Value
   const initialValues = {
     dropdown:'',
     notes: '',
@@ -36,6 +41,8 @@ function AddSite({navigation}) {
     url: '',
     userName: '',
   };
+
+//Formik form structure
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -43,7 +50,12 @@ function AddSite({navigation}) {
       <Formik
         initialValues={initialValues}
         onSubmit={values => {
-          sendData(values);
+          if(images.siteName.hasOwnProperty(values.siteName.toLowerCase()))
+            sendData(values);
+
+          else{
+            Toast.show('Enter proper Site Name')
+          }
          
         }}>
         {({handleSubmit, isValid, resetForm}) => (
@@ -51,11 +63,11 @@ function AddSite({navigation}) {
             <View style={styles.entryCon}>
               <View style={styles.con1}>
                 <Text style={styles.text1}>URL</Text>
-                <Field component={Details} name="url" />
+                <Field component={CustomInput} name="url" />
               </View>
               <View>
                 <Text style={styles.text1}>Site Name</Text>
-                <Field component={Details} name="siteName" />
+                <Field component={CustomInput} name="siteName" />
               </View>
 
               <View>
@@ -65,13 +77,13 @@ function AddSite({navigation}) {
 
               <View>
                 <Text style={styles.text1}>User Name</Text>
-                <Field component={Details} name="userName" />
+                <Field component={CustomInput} name="userName" />
               </View>
 
               <View>
                 <Text style={styles.text2}>Site Password</Text>
                 <Field
-                  component={PasswordInput}
+                  component={PasswordToggleInput}
                   name="password"
                   secureTextEntry
                 />
@@ -80,7 +92,7 @@ function AddSite({navigation}) {
               <View style={styles.notes}>
                 <Text style={styles.text1}>Notes</Text>
                 <Field
-                  component={Details}
+                  component={CustomInput}
                   multiLine={true}
                   numberOfLines={4}
                   name="notes"
@@ -111,6 +123,7 @@ function AddSite({navigation}) {
   );
 }
 
+//Dedicated stylesheet
 const styles = StyleSheet.create({
   text1: {
     fontSize: Platform.OS === 'ios' ? 20 : 15,

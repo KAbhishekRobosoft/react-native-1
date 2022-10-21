@@ -1,19 +1,27 @@
 import React from 'react';
-import {View, StyleSheet, Text, Pressable, Image} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  Pressable,
+  Image,
+  KeyboardAvoidingView,
+  ScrollView,
+} from 'react-native';
 import CustomInput from '../component/CustomInput';
 import {Formik, Field} from 'formik';
-import Button from '../component/Button';
+import Button from '../component/AuthenticationButton';
 import LinearGradient from 'react-native-linear-gradient';
 import PasswordToggleInput from '../component/PasswordToggleInput';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch} from 'react-redux';
 import {login} from '../redux/AuthenticationSlice';
-
+import Toast from 'react-native-simple-toast';
 
 function SignIn() {
   const dispatch = useDispatch();
   const signIn = async values => {
-    const {password, phoneNumber} = values;
+    const {password} = values;
     let mPin = password;
     try {
       await AsyncStorage.setItem('mPin', mPin);
@@ -23,18 +31,33 @@ function SignIn() {
     dispatch(login(mPin));
   };
 
+  const initialValues = {
+    phoneNumber: '',
+    password: '',
+  };
+
   return (
     <LinearGradient colors={['#1baaff', '#0e85ff']} style={styles.main_con}>
-      <View style={styles.workCon}>
+      <ScrollView>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.workCon}>
         <Formik
-          
-          initialValues={{
-            phoneNumber: '',
-            password: '',
-          }}
-          
-          onSubmit={values => {
-              signIn(values);
+          initialValues={{initialValues}}
+          onSubmit={(values, {resetForm}) => {
+            
+            if (!/(91)(\d){10}\b/.test(values.phoneNumber) || (values.password.length > 4 || values.password.length < 4) ) {
+                Toast.show('Proper Indian Mobile Number with 91 or 4 digit MPIN');
+              
+            }
+
+            if (/(91)(\d){10}\b/.test(values.phoneNumber)) {
+              if (values.password.length === 4) {
+                resetForm({initialValues});
+                Toast.show('Sign In Successfull');
+                signIn(values);
+              }
+            }
           }}>
           {({handleSubmit, isValid}) => (
             <View style={styles.main_con}>
@@ -63,6 +86,7 @@ function SignIn() {
               <View style={styles.butView}>
                 <Button
                   onPress={handleSubmit}
+                  disabled={!isValid}
                   name="SIGN IN"
                 />
               </View>
@@ -76,7 +100,8 @@ function SignIn() {
             </View>
           )}
         </Formik>
-      </View>
+      </KeyboardAvoidingView>
+      </ScrollView>
     </LinearGradient>
   );
 }

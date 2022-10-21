@@ -3,48 +3,50 @@ import {Text, View, TextInput, StyleSheet} from 'react-native';
 
 const CustomInput = props => {
   const {
-    field: {name, onBlur, onChange, value},
-    form: {errors, touched, setFieldTouched},
+    field: {name, onBlur, onChange, value,editable,defaultValue,multiLine,numberOfLines},
+    form: {setFieldTouched},
     ...inputProps
   } = props;
 
-  const hasError = errors[name] && touched[name];
 
   return (
-    <View>
-      <TextInput
-        style={[styles.textInput, hasError && styles.errorInput]}
-        placeholderTextColor={'#cacdd2'}
-        value={value}
-        onChangeText={text => onChange(name)(text)}
-        onBlur={() => {
-          setFieldTouched(name);
-          onBlur(name);
-        }}
-        {...inputProps}
-      />
-      {hasError && <Text style={styles.errorText}>{errors[name]}</Text>}
-    </View>
+    <View style={styles.textInpView1}>
+    <TextInput
+      style={styles.textInp1}
+      editable={editable}
+      value={value}
+      defaultValue={defaultValue}
+      multiline={multiLine}
+      numberOfLines={numberOfLines}
+      onChangeText={text => onChange(name)(text)}
+      onBlur={() => {
+        setFieldTouched(name);
+        onBlur(name);
+      }}
+      {...inputProps}
+    />
+  </View>
   );
 };
 
+
 const styles = StyleSheet.create({
-  textInput: {
-    backgroundColor: 'white',
-    height: 50,
+  textInpView1: {
+    padding: 10,
+    alignItems:"center"
+  },
+
+  textInp1: {
+    height: Platform.OS === "ios" ? 45 : 40,
     width: 330,
+    borderWidth: Platform.OS === "ios" ?  2 : 1,
+    borderColor: Platform.OS === "ios" ? '#e9e9ea' : 'black',
     borderRadius: 6,
-    padding: 15,
-    fontWeight: 'bold',
-    fontSize:16
-  },
-  errorText: {
-    fontSize: 10,
-    color: 'red',
-  },
-  errorInput: {
-    borderColor: 'red',
+    fontSize: 16,
+    padding: 10,
+    backgroundColor: '#f5f7fb',
   },
 });
+
 
 export default CustomInput;

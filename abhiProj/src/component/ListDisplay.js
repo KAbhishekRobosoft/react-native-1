@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import {images} from './Images';
+import { images } from '../utils/HardCodedData'
 import Clipboard from '@react-native-community/clipboard';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {deleteData} from '../redux/AddDataSlice';
@@ -105,7 +105,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#0e85ff',
     fontWeight: 'bold',
-    marginLeft: 40,
+    marginLeft: 10,
+    textAlign: 'center',
     marginTop: 10,
   },
 

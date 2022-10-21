@@ -1,6 +1,17 @@
 import React from 'react';
-import {View, StyleSheet, Image, Text,KeyboardAvoidingView} from 'react-native';
-import TopNavigation from '../component/TopNavigation';
+import {
+  View,
+  StyleSheet,
+  Image,
+  Text,
+  KeyboardAvoidingView,
+  ScrollView,
+} from 'react-native';
+import TopNavigation from '../utils/TopNavigation';
+
+//Contains Sign in and sign Up screens in Top navigation format.
+//Structure in top navigation component
+
 function UserAuthentication() {
   return (
     <KeyboardAvoidingView
@@ -15,7 +26,7 @@ function UserAuthentication() {
         </View>
       </View>
       <View style={styles.sub_con2}>
-        <TopNavigation />
+          <TopNavigation />
       </View>
     </KeyboardAvoidingView>
   );
@@ -27,14 +38,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#1baaff',
   },
 
-  sub_con1:{
-    flex:1,
-    flexDirection:"row",
-    justifyContent:"center",
+  sub_con1: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
 
-  sub_con2:{
-    flex:4
+  sub_con2: {
+    flex: 3,
   },
 
   lock_img: {

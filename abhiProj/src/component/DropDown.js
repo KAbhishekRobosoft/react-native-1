@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
 import {View} from 'react-native';
-import { types1 } from '../component/Images';
+import {types1} from '../utils/HardCodedData'
 
 const DropDown = props => {
   const [isFocus, setIsFocus] = useState(false);

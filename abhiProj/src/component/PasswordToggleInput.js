@@ -19,64 +19,70 @@ function PasswordToggleInput(props) {
   }
 
   const {
-    field: {name, onBlur, onChange,value},
-    form: {errors, touched, setFieldTouched},
+    field: {name, onBlur, onChange,value,defaultValue,editable},
+    form: {setFieldTouched},
     ...inputProps
   } = props;
 
-  const hasError = errors[name] && touched[name];
 
   return (
+    <View style={styles.main_con}>
     <View>
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-        <View>
-          <TextInput
-            value={value}
-            placeholderTextColor={'#cacdd2'}
-            onChangeText={text => onChange(name)(text)}
-            onBlur={() => {
-              setFieldTouched(name);
-              onBlur(name);
-            }}
-            {...inputProps}
-            secureTextEntry={secureTextEntry}
-            style={[styles.textInput, hasError && styles.errorInput]}
-          />
-        </View>
-        <View
-          style={{
-            backgroundColor: 'white',
-            height: 50,
-            borderBottomRightRadius: 6,
-            borderTopRightRadius: 6,
-          }}>
-          <TouchableOpacity onPress={onIconPress}>
-            <Icon style={{margin: 15}} name={iconName} size={20} />
-          </TouchableOpacity>
-        </View>
-      </View>
-      {hasError && <Text style={styles.errorText}>{errors[name]}</Text>}
+      <TextInput
+        defaultValue={defaultValue}
+        editable={editable}
+        value={value}
+        onChangeText={text => onChange(name)(text)}
+        onBlur={() => {
+          setFieldTouched(name);
+          onBlur(name);
+        }}
+        {...inputProps}
+        secureTextEntry={secureTextEntry}
+        style={styles.textInput}
+      />
     </View>
+    <View
+      style={styles.icon}>
+      <TouchableOpacity onPress={onIconPress}>
+        <Icon style={{margin: 15}} name={iconName} size={15} />
+      </TouchableOpacity>
+    </View>
+  </View>
   );
 }
 
 const styles = StyleSheet.create({
+  main_con: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop:15
+  },
+
+  icon:{
+    backgroundColor: '#f5f7fb',
+    borderBottomWidth:Platform.OS === "ios" ? 2 : 1,
+    borderTopWidth:Platform.OS === "ios" ? 2 : 1,
+    borderRightWidth:Platform.OS === "ios" ? 2 : 1,
+    height: 45,
+    borderBottomRightRadius: 6,
+    borderColor:Platform.OS === "ios" ? '#e9e9ea' : 'black',
+    borderTopRightRadius: 6,
+  },
+
   textInput: {
-    backgroundColor: 'white',
-    height: 50,
+    backgroundColor: '#f5f7fb',
+    height: 45,
+    borderBottomWidth:Platform.OS === "ios" ? 2 : 1,
+    borderTopWidth:Platform.OS === "ios" ? 2 : 1,
+    borderLeftWidth:Platform.OS === "ios" ? 2 : 1,
+    borderColor:Platform.OS === "ios" ? '#e9e9ea': 'black',
     width: 275,
     borderTopLeftRadius: 6,
     borderBottomLeftRadius: 6,
     padding: 15,
     fontWeight: 'bold',
-    fontSize: 16,
-  },
-  errorText: {
-    fontSize: 10,
-    color: 'red',
-  },
-  errorInput: {
-    borderColor: 'red',
+    fontSize: 15,
   },
 });
 

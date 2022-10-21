@@ -11,7 +11,7 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import { types } from '../component/Images';
+import { types } from '../utils/HardCodedData';
 import {Dropdown} from 'react-native-element-dropdown';
 import {useDispatch, useSelector} from 'react-redux';
 import ListDisplay from '../component/ListDisplay';
@@ -43,10 +43,13 @@ function FlatList({navigation}) {
   }
 
   return (
+
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.main_con}>
+
       <View style={styles.bgm1}>
+      <View style={{flexDirection:"row",alignItems:"center"}}>
         <View style={styles.imgView}>
           <Pressable>
             <Image source={require('../images/burger.png')} />
@@ -55,7 +58,8 @@ function FlatList({navigation}) {
         <View style={styles.con1}>
           <Text style={styles.listText}>PASS{'\n'}MANAGER</Text>
         </View>
-
+        </View>
+        <View style={{flexDirection:"row"}}>
         <View style={styles.searchView}>
           <Pressable
             onPress={() => {
@@ -75,6 +79,7 @@ function FlatList({navigation}) {
           <Pressable onPress={logOutFromAccount}>
             <Image source={require('../images/profile.png')} />
           </Pressable>
+        </View>
         </View>
       </View>
 
@@ -106,6 +111,7 @@ function FlatList({navigation}) {
               selectedTextStyle={styles.selectedTextStyle}
               inputSearchStyle={styles.inputSearchStyle}
               data={types}
+              value="All"
               maxHeight={300}
               labelField="label"
               valueField="value"
@@ -146,6 +152,7 @@ function FlatList({navigation}) {
         </View>
       </View>
     </KeyboardAvoidingView>
+    
   );
 }
 
@@ -154,57 +161,24 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  textView1: {
-    marginRight: 10,
-    marginTop: 20,
-  },
-
   textCount:{
     textAlign:"center",
     fontSize:18,
     color:"white",
-    width:30,
-    borderRadius:10,
-    overflow:"hidden"
-  },
-
-  textView2: {
-    marginTop: 20,
-    marginRight: 10,
-    backgroundColor: '#0e85ff',
-    width: 30,
-    overflow: 'hidden',
-    borderRadius: 20,
-  },
-
-  textView3: {
-    marginRight: 18,
-    marginTop: 20,
+    width:20,
+    fontWeight:"bold"
   },
 
   lengthCount:{
       backgroundColor:"#0e85ff",
       marginTop:20,
-      marginRight:20
-  },
-
-  text2: {
-    fontSize: 19.2,
-  },
-
-  text3: {
-    fontSize: 19.2,
-    textAlign: 'center',
+      marginRight:20,
+      borderRadius:30
   },
 
   dropView: {
     flexDirection: 'row',
     alignItems:'center'
-  },
-
-  listImg: {
-    width: 40,
-    height: 30,
   },
 
   listBack: {
@@ -223,14 +197,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 
-  rowComp: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-
   placeholderStyle: {
     fontSize: 16,
   },
+
   selectedTextStyle: {
     fontSize: 16,
   },
@@ -265,16 +235,16 @@ const styles = StyleSheet.create({
 
   bgm1: {
     flexDirection: 'row',
+    justifyContent:"space-between",
     backgroundColor: '#0e85ff',
     alignItems: 'center',
     width: '100%',
     height: 100,
-    flex: 2,
+    flex: 3,
   },
 
   searchView: {
-    marginTop: Platform.OS === 'ios' ? 30 : 10,
-    marginLeft: 60,
+    marginTop: Platform.OS === 'ios' ? 20 : 10,
   },
 
   txtInp: {
@@ -282,7 +252,7 @@ const styles = StyleSheet.create({
   },
 
   AddView: {
-    marginTop: 500,
+    marginTop: 420,
     marginLeft: 300,
     position: 'absolute',
   },
@@ -294,7 +264,7 @@ const styles = StyleSheet.create({
     width: 170,
     marginTop:20,
     borderRadius: 6,
-    marginRight:40,
+    marginRight:10,
     borderColor: Platform.OS === 'ios' ? '#e9e9ea' : 'black',
     backgroundColor: '#f5f7fb',
   },
@@ -314,33 +284,31 @@ const styles = StyleSheet.create({
   selectedTextStyle: {
     fontSize: 16,
   },
-  iconStyle: {
-    width: 20,
-    height: 20,
-  },
+ 
   inputSearchStyle: {
     height: 40,
     fontSize: 16,
   },
 
   profileView: {
-    marginTop: Platform.OS === 'ios' ? 30 : 10,
+    marginTop: Platform.OS === 'ios' ? 20 : 10,
     marginLeft: 30,
+    marginRight:10
   },
 
   syncView: {
-    marginTop: Platform.OS === 'ios' ? 30 : 10,
+    marginTop: Platform.OS === 'ios' ? 20 : 10,
     marginLeft: 30,
   },
 
   imgView: {
-    marginTop: Platform.OS === 'ios' ? 40 : 15,
+    marginTop: Platform.OS === 'ios' ? 20 : 15,
     marginLeft: 30,
   },
 
   con1: {
     marginLeft: 20,
-    marginTop: Platform.OS === 'ios' ? 40 : 8,
+    marginTop: Platform.OS === 'ios' ? 10 : 8,
   },
 
   listText: {

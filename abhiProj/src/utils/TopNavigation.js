@@ -1,12 +1,12 @@
 import React from 'react'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { NavigationContainer } from '@react-navigation/native';
 const Tab = createMaterialTopTabNavigator();
 import SignIn from '../pages/SignIn';
 import SignUp from '../pages/SignUp';
 
 function TopNavigation() {
   return (
+ 
       <Tab.Navigator
       screenOptions= {{
         tabBarStyle:{backgroundColor:'#1baaff'},
@@ -18,6 +18,7 @@ function TopNavigation() {
         <Tab.Screen name="Sign In" component={SignIn} />
         <Tab.Screen name="Sign Up" component={SignUp} />
       </Tab.Navigator>
+    
    
   )
 }

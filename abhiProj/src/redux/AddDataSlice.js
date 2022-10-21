@@ -1,5 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 
+//Creation of initial state for reducer
 const addSiteReducer = createSlice({
   name: 'site',
   initialState:{
@@ -7,12 +8,16 @@ const addSiteReducer = createSlice({
     userTemp:[]
   },
 
+  //Reducer function
   reducers: {
+
+//Add Object to state
     addData:(state, action) => {
       state.userData.push(action.payload)
       state.userTemp.push(action.payload)
     },
 
+//Updation of state
     updateData:(state,action)=>{
       
       state.userData= state.userData.map(ele=>{
@@ -31,16 +36,18 @@ const addSiteReducer = createSlice({
       })
       state.userTemp= state.userData
   },
-
+//Deletion of a object in state
     deleteData:(state,action)=>{
       state.userData= state.userData.filter(item => item.id !== action.payload)
       state.userTemp= state.userData
     },
 
+//Search FUnctionality
     filterData:(state,action)=>{
        state.userData= state.userTemp.filter(ele => ele.siteName.toLowerCase().includes(action.payload.toLowerCase()))
     },
 
+//Category Functionality
     filterCategory:(state,action)=>{
       if(action.payload === 'All')
         state.userData= state.userTemp

@@ -8,18 +8,25 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import {Formik, Field} from 'formik';
-import Details from '../utils/Details';
-import DropDown from '../utils/DropDown';
-import PasswordInput from '../utils/PasswordInput';
-import EntryButton from '../utils/EntryButton';
+import DropDown from '../component/DropDown';
+import EntryButton from '../component/CRUDButton';
 import {useDispatch} from 'react-redux';
 import { updateData } from '../redux/AddDataSlice';
+import CustomInput from '../component/CustomInput';
+import PasswordToggleInput from '../component/PasswordToggleInput';
 
 function EditSite({navigation,route}) {
+
   const dispatch = useDispatch();
+
+//Data is brought here by sending data as parameter in flatlist page.  
   let data = route.params.paramKey;
+
+//Used to make textInput editable by making it 
+//either true or false using useState
   const [edit,setEdit]= useState(false)
 
+//Function to send edited object passed through forms
   function sendData(obj) {
     if (obj === initialValues) Toast.show('Please enter Values');
     else {
@@ -29,6 +36,7 @@ function EditSite({navigation,route}) {
     }
   }
 
+//Form initial Values
   const initialValues = {
     url: data.url,
     siteName: data.siteName,
@@ -37,6 +45,7 @@ function EditSite({navigation,route}) {
     password: data.password,
     notes: data.notes,
   };
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -52,7 +61,7 @@ function EditSite({navigation,route}) {
           <View style={styles.entryCon}>
             <View style={styles.con1}>
               <Text style={styles.text1}>URL</Text>
-              <Field editable= {edit} defaultValue={data.url} component={Details} name="url" />
+              <Field editable= {edit} defaultValue={data.url} component={CustomInput} name="url" />
             </View>
 
             <View>
@@ -60,7 +69,7 @@ function EditSite({navigation,route}) {
               <Field
                 defaultValue={data.siteName}
                 editable= {edit}
-                component={Details}
+                component={CustomInput}
                 name="siteName"
               />
             </View>
@@ -80,7 +89,7 @@ function EditSite({navigation,route}) {
               <Field
                 defaultValue={data.userName}
                 editable={edit}
-                component={Details}
+                component={CustomInput}
                 name="userName"
               />
             </View>
@@ -90,7 +99,7 @@ function EditSite({navigation,route}) {
               <Field
                 defaultValue={data.userName}
                 editable= {edit}
-                component={PasswordInput}
+                component={PasswordToggleInput}
                 name="password"
                 secureTextEntry
               />
@@ -99,7 +108,7 @@ function EditSite({navigation,route}) {
             <View style={styles.notes}>
               <Text style={styles.text1}>Notes</Text>
               <Field
-                component={Details}
+                component={CustomInput}
                 editable={edit}
                 multiLine={true}
                 numberOfLines={4}

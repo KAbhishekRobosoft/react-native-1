@@ -4,9 +4,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { retrieveToken } from '../redux/AuthenticationSlice';
 import { NavigationContainer } from '@react-navigation/native';
-import StackNavigation from '../component/StackNavigation'
+import StackNavigation from './StackNavigation'
 import RNBootSplash from 'react-native-bootsplash';
-import UserAuthentication from './UserAuthentication'
+import UserAuthentication from '../pages/UserAuthentication';
 
 function MainPage() {
   const dispatch = useDispatch();

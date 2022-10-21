@@ -1,24 +1,39 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet,KeyboardAvoidingView} from 'react-native';
 import CustomInput from '../component/CustomInput';
 import {Formik, Field} from 'formik';
-import Button from '../component/Button';
+import Button from '../component/AuthenticationButton';
 import LinearGradient from 'react-native-linear-gradient';
 import PasswordToggleInput from '../component/PasswordToggleInput';
-import {Validation} from '../component/Validation';
+import Toast from 'react-native-simple-toast';
 
 function SignUp({navigation}) {
+
+  const initialValues= {
+    phoneNumber: '',
+    password: '',
+    confirmPassword:''
+  }
+
   return (
     <LinearGradient colors={['#1baaff', '#0e85ff']} style={styles.main_con}>
-      <View style={styles.workCon}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.workCon}>
         <Formik
-          validationSchema={Validation}
-          initialValues={{
-            phoneNumber: '',
-            password: '',
-          }}
-          onSubmit={values => {
-            navigation.navigate('Sign In');
+          initialValues={{initialValues}}
+          onSubmit={(values,{resetForm}) => {
+            if(values.password !== values.confirmPassword ||(!(/(91)(\d){10}\b/.test(values.phoneNumber))) ){
+              Toast.show('10 digit mobile number starting with 91 or Confirm Password Not Matching');
+            }
+        
+            if(/(91)(\d){10}\b/.test(values.phoneNumber)){
+              if(values.password === values.confirmPassword){
+                    resetForm({initialValues})
+                    Toast.show('Sign In Please');
+                    navigation.navigate('Sign In');
+              }
+            }
           }}>
           {({handleSubmit, isValid}) => (
             <View style={styles.main_con}>
@@ -58,7 +73,7 @@ function SignUp({navigation}) {
             </View>
           )}
         </Formik>
-      </View>
+</KeyboardAvoidingView>
     </LinearGradient>
   );
 }
