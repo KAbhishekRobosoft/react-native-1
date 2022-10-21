@@ -1,18 +1,21 @@
 import {createSlice} from '@reduxjs/toolkit';
 
-
-const initialState =[]
-
 const addSiteReducer = createSlice({
   name: 'site',
-  initialState,
+  initialState:{
+    userData:[],
+    userTemp:[]
+  },
+
   reducers: {
     addData:(state, action) => {
-      state.push(action.payload)
+      state.userData.push(action.payload)
+      state.userTemp.push(action.payload)
     },
 
     updateData:(state,action)=>{
-      return state.map(ele=>{
+      
+      state.userData= state.userData.map(ele=>{
           if(ele.id === action.payload.id){
               return{
                   ...ele,
@@ -26,13 +29,27 @@ const addSiteReducer = createSlice({
           }
           return ele
       })
+      state.userTemp= state.userData
   },
 
     deleteData:(state,action)=>{
-      return state.filter(item => item.id !== action.payload)
+      state.userData= state.userData.filter(item => item.id !== action.payload)
+      state.userTemp= state.userData
     },
+
+    filterData:(state,action)=>{
+       state.userData= state.userTemp.filter(ele => ele.siteName.toLowerCase().includes(action.payload.toLowerCase()))
+    },
+
+    filterCategory:(state,action)=>{
+      if(action.payload === 'All')
+        state.userData= state.userTemp
+        
+      else  
+        state.userData= state.userTemp.filter(ele => ele.dropdown === action.payload)
+    }
 
   }})
 
-export const {addData,updateData,deleteData,filterData} = addSiteReducer.actions;
+export const {addData,updateData,deleteData,filterData,filterCategory} = addSiteReducer.actions;
 export const reducer= addSiteReducer.reducer;

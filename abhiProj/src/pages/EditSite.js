@@ -23,18 +23,19 @@ function EditSite({navigation,route}) {
   function sendData(obj) {
     if (obj === initialValues) Toast.show('Please enter Values');
     else {
+      obj['id']= data.id
       dispatch(updateData(obj));
       navigation.navigate('List');
     }
   }
 
   const initialValues = {
-    id:data.id,
-    url: '',
-    siteName: '',
-    userName: '',
-    password: '',
-    notes: '',
+    url: data.url,
+    siteName: data.siteName,
+    dropdown:data.dropdown,
+    userName: data.userName,
+    password: data.password,
+    notes: data.notes,
   };
   return (
     <KeyboardAvoidingView

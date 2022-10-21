@@ -13,4 +13,9 @@ export const types = [
     {label:'sports',value:'sports'},
     {label:'All',value:'All'}
   ];
+
+  export const types1 = [
+    {label: 'Social Media', value: 'Social Media'},
+    {label:'sports',value:'sports'},
+  ];
   

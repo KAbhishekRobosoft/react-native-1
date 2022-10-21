@@ -11,29 +11,29 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { types } from '../component/Images';
+import {Dropdown} from 'react-native-element-dropdown';
 import {useDispatch, useSelector} from 'react-redux';
 import ListDisplay from '../component/ListDisplay';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { logout } from '../redux/AuthenticationSlice';
-
+import {logout} from '../redux/AuthenticationSlice';
+import {filterData} from '../redux/AddDataSlice';
+import { filterCategory } from '../redux/AddDataSlice';
 
 function FlatList({navigation}) {
   const [text, setText] = useState(false);
-  const [searchtext,setSearchText]= useState('')
-  const [search,setSearch]= useState(false) 
-  const dispatch= useDispatch()
-  let data = useSelector(state => state.addDetails);
+  const dispatch = useDispatch();
+  let data = useSelector(state => state.addDetails.userData);
 
-  function searchText(getinpText){
-    setSearchText(getinpText)
+  function searchText(getinpText) {
+    dispatch(filterData(getinpText));
   }
 
-  function searchList(){
-    setSearch(true)
-    setText(false)
+  function searchList() {
+    setText(false);
   }
 
-  async function logOutFromAccount(){
+  async function logOutFromAccount() {
     try {
       await AsyncStorage.removeItem('mPin');
     } catch (e) {
@@ -72,73 +72,73 @@ function FlatList({navigation}) {
         </View>
 
         <View style={styles.profileView}>
-          <Pressable onPress= {logOutFromAccount}>
+          <Pressable onPress={logOutFromAccount}>
             <Image source={require('../images/profile.png')} />
           </Pressable>
         </View>
       </View>
 
       <View style={styles.workCon}>
-        {!text && !search && (
+        {!text && (
           <View style={styles.txtView}>
             <Text style={styles.workText}>Sites</Text>
             <View style={styles.underLine}></View>
           </View>
         )}
-        {text && !search && (
+        {text && (
           <View style={styles.txtInpView}>
             <TextInput
               style={styles.txtInp}
               placeholder="Type Keywords to search"
-              onChangeText= {searchText}
+              onChangeText={searchText}
             />
             <Pressable onPress={searchList}>
               <Icon name="arrow-right" size={20} />
             </Pressable>
           </View>
         )}
-        {search && (
-          <View style={styles.iconButView}>
-            <Pressable onPress={()=>setSearch(false)}>
-              <Icon name="arrow-left" size={20} />
-            </Pressable>
-          </View>
-        )}
         {!text && (
           <View style={styles.dropView}>
-            <View style= {styles.textView1}>
-              <Text style={styles.text2}>Social Media</Text>
+            <View>
+            <Dropdown
+              style={styles.dropdown}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              data={types}
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              onChange={item => {
+                dispatch(filterCategory(item.value))
+              }}
+            />
+            </View>
+            <View style={styles.lengthCount}>
+                <Text style={styles.textCount}>{data.length}</Text>
             </View>
 
-            <View style={styles.textView2}>
-              <Text style={styles.text3}>07</Text>
-            </View>
-
-            <View style={styles.textView3}>
-              <Image source={require('../images/copy.png')} />
-            </View>
           </View>
         )}
       </View>
 
       <View style={styles.listBack}>
         <ScrollView>
-          {data.length > 0 && (!search) ?
-            data.map(ele => {
-            let img = ele.siteName.toLowerCase();
-            return <ListDisplay navigation= {navigation} key={ele.id} img={img} ele={ele} />;
-          }):
-            data.length > 0 && (search) ?
-            data.filter(ele => {
-                  console.log("hello"+searchtext)
-                  ele.siteName.toLowerCase().includes(searchtext.toLowerCase())
-            }).map(ele=>{
-              console.log(ele)
-              let img= ele.siteName.toLowerCase()
-              return <ListDisplay navigation= {navigation} key= {ele.id} img= {img} ele= {ele} />
-            }):null
-          }
-        </ScrollView>
+          {data?.length > 0
+            ? data.map(ele => {
+                let img = ele.siteName.toLowerCase();
+                return (
+                  <ListDisplay
+                    navigation={navigation}
+                    key={ele.id}
+                    img={img}
+                    ele={ele}
+                  />
+                );
+              })
+            : null}
+
+         </ScrollView>     
         <View style={styles.AddView}>
           <Pressable onPress={() => navigation.navigate('AddSite')}>
             <Image source={require('../images/add.png')} />
@@ -154,37 +154,52 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  textView1:{
-    marginRight:10,
-    marginTop:20
+  textView1: {
+    marginRight: 10,
+    marginTop: 20,
   },
 
-  textView2:{
-    marginTop:20,
-    marginRight:10,
-    backgroundColor:"#0e85ff",
+  textCount:{
+    textAlign:"center",
+    fontSize:18,
+    color:"white",
     width:30,
-    overflow:"hidden",
-    borderRadius:20,
+    borderRadius:10,
+    overflow:"hidden"
   },
 
-  textView3:{
-    marginRight:18,
-    marginTop:20
+  textView2: {
+    marginTop: 20,
+    marginRight: 10,
+    backgroundColor: '#0e85ff',
+    width: 30,
+    overflow: 'hidden',
+    borderRadius: 20,
   },
 
-  text2:{
-    fontSize:19.2,
+  textView3: {
+    marginRight: 18,
+    marginTop: 20,
   },
 
-  text3:{
-    fontSize:19.2,
-    textAlign:"center"
+  lengthCount:{
+      backgroundColor:"#0e85ff",
+      marginTop:20,
+      marginRight:20
+  },
+
+  text2: {
+    fontSize: 19.2,
+  },
+
+  text3: {
+    fontSize: 19.2,
+    textAlign: 'center',
   },
 
   dropView: {
     flexDirection: 'row',
-    alignItems:"center"
+    alignItems:'center'
   },
 
   listImg: {
@@ -206,13 +221,6 @@ const styles = StyleSheet.create({
   inputSearchStyle: {
     height: 40,
     fontSize: 16,
-  },
-
-  dropdown: {
-    width: 180,
-    marginRight: 20,
-    height: 50,
-    marginTop: 20,
   },
 
   rowComp: {
@@ -244,8 +252,8 @@ const styles = StyleSheet.create({
     width: '100%',
     padding: 5,
     height: 55,
-    marginTop: Platform.OS === "android" ? 12 : 0,
-    marginBottom:Platform.OS === "ios" ? 14 : 0
+    marginTop: Platform.OS === 'android' ? 12 : 0,
+    marginBottom: Platform.OS === 'ios' ? 14 : 0,
   },
 
   workCon: {
@@ -269,10 +277,6 @@ const styles = StyleSheet.create({
     marginLeft: 60,
   },
 
-  iconButView:{
-    justifyContent:"flex-start"
-  },
-
   txtInp: {
     fontSize: 15,
   },
@@ -281,6 +285,42 @@ const styles = StyleSheet.create({
     marginTop: 500,
     marginLeft: 300,
     position: 'absolute',
+  },
+
+  dropdown: {
+    height: Platform.OS === 'ios' ? 45 : 35,
+    borderWidth: Platform.OS === 'ios' ? 2 : 1,
+    padding: 5,
+    width: 170,
+    marginTop:20,
+    borderRadius: 6,
+    marginRight:40,
+    borderColor: Platform.OS === 'ios' ? '#e9e9ea' : 'black',
+    backgroundColor: '#f5f7fb',
+  },
+
+
+  text1: {
+    fontSize: 20,
+    color: '#c9ccd1',
+  },
+
+  icon: {
+    marginRight: 5,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
   },
 
   profileView: {

@@ -13,6 +13,7 @@ function Details(props) {
       <TextInput
         style={styles.textInp1}
         editable={editable}
+        value={value}
         defaultValue={defaultValue}
         multiline={multiLine}
         numberOfLines={numberOfLines}

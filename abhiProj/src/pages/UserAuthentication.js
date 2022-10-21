@@ -1,9 +1,11 @@
 import React from 'react';
-import {View, StyleSheet, Image, Text} from 'react-native';
+import {View, StyleSheet, Image, Text,KeyboardAvoidingView} from 'react-native';
 import TopNavigation from '../component/TopNavigation';
 function UserAuthentication() {
   return (
-    <View style={styles.main_con}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.main_con}>
       <View style={styles.sub_con1}>
         <View style={styles.lock_img}>
           <Image source={require('../images/pic_small.png')} />
@@ -15,7 +17,7 @@ function UserAuthentication() {
       <View style={styles.sub_con2}>
         <TopNavigation />
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 

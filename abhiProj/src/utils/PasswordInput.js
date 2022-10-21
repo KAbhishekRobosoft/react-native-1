@@ -32,6 +32,7 @@ function PasswordInput(props) {
         <TextInput
           defaultValue={defaultValue}
           editable={editable}
+          value={value}
           onChangeText={text => onChange(name)(text)}
           onBlur={() => {
             setFieldTouched(name);

@@ -18,30 +18,23 @@ import {useDispatch} from 'react-redux';
 function AddSite({navigation}) {
   const dispatch = useDispatch();
 
-  async function sendData(obj) {
+  function sendData(obj) {
     if (obj === initialValues) Toast.show('Please enter Values');
     else {
+      obj['id']= Math.floor(Math.random() * 100)
       dispatch(addData(obj));
       navigation.navigate('List');
       Toast.show('Saved Successfully');
     }
   }
 
-  const dataValue = {
-    url: '',
-    siteName: '',
-    userName: '',
-    password: '',
-    notes: '',
-  };
-
   const initialValues = {
-    id: Math.floor(Math.random() * 1000),
-    url: '',
-    siteName: '',
-    userName: '',
-    password: '',
+    dropdown:'',
     notes: '',
+    password: '',
+    siteName: '',
+    url: '',
+    userName: '',
   };
   return (
     <KeyboardAvoidingView
@@ -49,9 +42,9 @@ function AddSite({navigation}) {
       style={styles.bossCon}>
       <Formik
         initialValues={initialValues}
-        dataValue= {dataValue}
         onSubmit={values => {
           sendData(values);
+         
         }}>
         {({handleSubmit, isValid, resetForm}) => (
           <>
@@ -99,7 +92,7 @@ function AddSite({navigation}) {
               <View style={styles.but1}>
                 <EntryButton
                   name="Reset"
-                  onPress={() => resetForm({dataValue})}
+                  onPress={()=>resetForm({initialValues})}
                   disabled={!isValid}
                 />
               </View>
@@ -151,7 +144,7 @@ const styles = StyleSheet.create({
   },
 
   butView: {
-    flex:1,
+    flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
     marginTop: Platform.OS === 'android' ? 9 : 74,
@@ -161,10 +154,10 @@ const styles = StyleSheet.create({
     marginTop: Platform.OS === 'android' ? 0 : 20,
   },
 
-  entryCon:{
-    flex:12,
-    alignItems:"center",
-    marginTop:20
-  }
+  entryCon: {
+    flex: 12,
+    alignItems: 'center',
+    marginTop: 20,
+  },
 });
 export default AddSite;

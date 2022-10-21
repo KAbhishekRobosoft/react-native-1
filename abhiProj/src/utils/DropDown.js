@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
 import {View} from 'react-native';
-import { types } from '../component/Images';
+import { types1 } from '../component/Images';
 
 const DropDown = props => {
   const [isFocus, setIsFocus] = useState(false);
@@ -22,8 +22,9 @@ const DropDown = props => {
         placeholderStyle={styles.placeholderStyle}
         selectedTextStyle={styles.selectedTextStyle}
         inputSearchStyle={styles.inputSearchStyle}
-        data={types}
+        data={types1}
         maxHeight={300}
+        value={value}
         labelField="label"
         valueField="value"
         searchPlaceholder="Search..."
