@@ -61,9 +61,8 @@ function AddSite({navigation}) {
         }}>
         {({handleSubmit, isValid, resetForm}) => (
           <ScrollView>
-           
             <View style={styles.entryCon}>
-              <View>
+              <View style={styles.con1}>
                 <Text style={styles.text1}>URL</Text>
                 <Field component={CustomInput} name="url" />
               </View>
@@ -101,7 +100,6 @@ function AddSite({navigation}) {
                 />
               </View>
             </View>
-          
 
             <View style={styles.butView}>
               <View style={styles.but1}>
@@ -132,14 +130,13 @@ const styles = StyleSheet.create({
     fontSize: Platform.OS === 'ios' ? 20 : 15,
     color: Platform.OS === 'ios' ? '#c9ccd1' : 'black',
     marginTop: Platform.OS === 'android' ? 5 : 0,
-    marginLeft: Platform.OS === 'android' ? 18 : 30,
+    marginLeft: Platform.OS === 'android' ? 18 : 20,
   },
 
   text2: {
     fontSize: Platform.OS === 'ios' ? 20 : 15,
     color: Platform.OS === 'ios' ? '#c9ccd1' : 'black',
     marginTop: Platform.OS === 'android' ? 5 : 0,
-    marginLeft:30
   },
 
   notes: {
@@ -157,18 +154,23 @@ const styles = StyleSheet.create({
   },
 
   but1: {
-    width: '50%',
+    width:'50%',
   },
 
   butView: {
-    flex:1,
-    marginTop:100,
+    flex: 1,
     flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: Platform.OS === 'android' ? 9 : 74,
+  },
+
+  con1: {
+    marginTop: Platform.OS === 'android' ? 0 : 20,
   },
 
   entryCon: {
-    flex:9,
-    marginTop: 50,
+    flex: 12,
+    marginTop: 20,
   },
 });
 export default AddSite;
