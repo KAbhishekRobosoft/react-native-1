@@ -129,7 +129,7 @@ function FlatList({navigation}) {
       </View>
 
       <View style={styles.listBack}>
-        <ScrollView>
+            <ScrollView>
           {data?.length > 0
             ? data.map(ele => {
                 let img = ele.siteName.toLowerCase();
@@ -144,13 +144,14 @@ function FlatList({navigation}) {
               })
             : null}
 
-         </ScrollView>     
+            </ScrollView>
         <View style={styles.AddView}>
           <Pressable onPress={() => navigation.navigate('AddSite')}>
             <Image source={require('../images/add.png')} />
           </Pressable>
         </View>
       </View>
+   
     </KeyboardAvoidingView>
     
   );
@@ -159,6 +160,7 @@ function FlatList({navigation}) {
 const styles = StyleSheet.create({
   main_con: {
     flex: 1,
+    
   },
 
   textCount:{
@@ -171,14 +173,15 @@ const styles = StyleSheet.create({
 
   lengthCount:{
       backgroundColor:"#0e85ff",
-      marginTop:20,
+      marginTop:10,
       marginRight:20,
       borderRadius:30
   },
 
   dropView: {
     flexDirection: 'row',
-    alignItems:'center'
+    alignItems:'center',
+    marginRight:15
   },
 
   listBack: {
@@ -206,8 +209,8 @@ const styles = StyleSheet.create({
   },
 
   txtView: {
-    marginTop: 20,
-    marginLeft: 20,
+    marginTop: 10,
+    marginLeft: 35,
   },
 
   workText: {
@@ -228,7 +231,6 @@ const styles = StyleSheet.create({
 
   workCon: {
     flexDirection: 'row',
-    flex: 1.5,
     justifyContent: 'space-between',
     alignItems: 'center',
   },
@@ -240,11 +242,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     height: 100,
-    flex: 3,
+
   },
 
   searchView: {
-    marginTop: Platform.OS === 'ios' ? 20 : 10,
+    marginTop: Platform.OS === 'ios' ? 10 : 10,
+    marginRight:20
   },
 
   txtInp: {
@@ -252,9 +255,10 @@ const styles = StyleSheet.create({
   },
 
   AddView: {
-    marginTop: 420,
-    marginLeft: 300,
-    position: 'absolute',
+    marginTop:130,
+    marginLeft:20,
+    justifyContent:"flex-end",
+    position:"absolute"
   },
 
   dropdown: {
@@ -262,7 +266,7 @@ const styles = StyleSheet.create({
     borderWidth: Platform.OS === 'ios' ? 2 : 1,
     padding: 5,
     width: 170,
-    marginTop:20,
+    marginTop:10,
     borderRadius: 6,
     marginRight:10,
     borderColor: Platform.OS === 'ios' ? '#e9e9ea' : 'black',
@@ -291,24 +295,23 @@ const styles = StyleSheet.create({
   },
 
   profileView: {
-    marginTop: Platform.OS === 'ios' ? 20 : 10,
-    marginLeft: 30,
-    marginRight:10
+    marginTop: Platform.OS === 'ios' ? 10 : 10,
+    marginRight:20
   },
 
   syncView: {
-    marginTop: Platform.OS === 'ios' ? 20 : 10,
-    marginLeft: 30,
+    marginTop: Platform.OS === 'ios' ? 10 : 10,
+    marginRight: 20,
   },
 
   imgView: {
-    marginTop: Platform.OS === 'ios' ? 20 : 15,
+    marginTop: Platform.OS === 'ios' ? 10 : 15,
     marginLeft: 30,
   },
 
   con1: {
     marginLeft: 20,
-    marginTop: Platform.OS === 'ios' ? 10 : 8,
+    marginTop: Platform.OS === 'ios' ? 0 : 8,
   },
 
   listText: {

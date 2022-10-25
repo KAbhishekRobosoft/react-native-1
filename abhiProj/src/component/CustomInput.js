@@ -10,7 +10,7 @@ const CustomInput = props => {
 
 
   return (
-    <View style={styles.textInpView1}>
+    <View style={styles.txtCon}>
     <TextInput
       style={styles.textInp1}
       editable={editable}
@@ -31,14 +31,11 @@ const CustomInput = props => {
 
 
 const styles = StyleSheet.create({
-  textInpView1: {
-    padding: 10,
-    alignItems:"center"
-  },
+
 
   textInp1: {
     height: Platform.OS === "ios" ? 45 : 40,
-    width: 330,
+    width:'90%',
     borderWidth: Platform.OS === "ios" ?  2 : 1,
     borderColor: Platform.OS === "ios" ? '#e9e9ea' : 'black',
     borderRadius: 6,
@@ -46,6 +43,11 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#f5f7fb',
   },
+
+  txtCon:{
+    marginTop:20,
+    alignItems:"center"
+  }
 });
 
 

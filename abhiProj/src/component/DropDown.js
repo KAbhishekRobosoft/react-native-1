@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     height: Platform.OS === "ios" ? 45 : 35,
     borderWidth: Platform.OS === 'ios' ? 2 : 1,
     padding: 10,
-    width: 330,
+    width: '95%',
     borderRadius: 6,
     borderColor: Platform.OS === 'ios' ? '#e9e9ea' : 'black',
     backgroundColor: '#f5f7fb',
@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
 
   dropView: {
     padding: 20,
+    alignItems:"center"
   },
 
   text1: {

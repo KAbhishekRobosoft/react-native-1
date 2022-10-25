@@ -10,7 +10,7 @@ function TopNavigation() {
       <Tab.Navigator
       screenOptions= {{
         tabBarStyle:{backgroundColor:'#1baaff'},
-        tabBarIndicatorStyle:{backgroundColor:"orange",marginLeft:50,width:100,height:4.5},
+        tabBarIndicatorStyle:{backgroundColor:"orange",marginLeft:50,width:'25%',height:4.5},
         tabBarLabelStyle:{color:"white",fontSize:20,fontWeight:"bold"},
         
       }}

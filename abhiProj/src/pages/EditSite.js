@@ -6,6 +6,7 @@ import {
   Text,
   Platform,
   KeyboardAvoidingView,
+  ScrollView,
 } from 'react-native';
 import {Formik, Field} from 'formik';
 import DropDown from '../component/DropDown';
@@ -50,16 +51,17 @@ function EditSite({navigation,route}) {
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.bossCon}>
-    
+ 
       <Formik
         initialValues={initialValues}
         onSubmit={values => {
           sendData(values)
         }}>
-        {({handleSubmit, isValid, resetForm}) => (
-          <>
+        {({handleSubmit, isValid}) => (
+          <ScrollView>
+          <View>
           <View style={styles.entryCon}>
-            <View style={styles.con1}>
+            <View>
               <Text style={styles.text1}>URL</Text>
               <Field editable= {edit} defaultValue={data.url} component={CustomInput} name="url" />
             </View>
@@ -134,7 +136,8 @@ function EditSite({navigation,route}) {
                 />
               </View>
             </View>
-          </>
+            </View>
+          </ScrollView>
         )}
       </Formik>
     </KeyboardAvoidingView>
@@ -153,6 +156,7 @@ const styles = StyleSheet.create({
     fontSize: Platform.OS === 'ios' ? 20 : 15,
     color: Platform.OS === 'ios' ? '#c9ccd1' : 'black',
     marginTop: Platform.OS === 'android' ? 5 : 0,
+    marginLeft:20
   },
 
   notes: {
@@ -161,14 +165,13 @@ const styles = StyleSheet.create({
   },
 
   entryCon:{
-    flex:12,
-    alignItems:"center",
-    marginTop:20
+    flex:9,
+    marginTop:40
   },
 
   but2: {
     marginLeft: 2,
-    width: 195,
+    width: '50%',
   },
 
   bossCon: {
@@ -176,18 +179,15 @@ const styles = StyleSheet.create({
   },
 
   but1: {
-    width: 195,
+    width: '50%',
   },
 
   butView: {
     flex:1,
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: Platform.OS === 'android' ? 9 : 74,
+    marginTop: Platform.OS === 'android' ?10 : 110,
   },
 
-  con1: {
-    marginTop: Platform.OS === 'android' ? 0 : 20,
-  },
 });
 export default EditSite;

@@ -6,6 +6,7 @@ import {
   Text,
   Platform,
   KeyboardAvoidingView,
+  ScrollView,
 } from 'react-native';
 import {Formik, Field} from 'formik';
 import CustomInput from '../component/CustomInput';
@@ -59,9 +60,10 @@ function AddSite({navigation}) {
          
         }}>
         {({handleSubmit, isValid, resetForm}) => (
-          <>
+          <ScrollView>
+           
             <View style={styles.entryCon}>
-              <View style={styles.con1}>
+              <View>
                 <Text style={styles.text1}>URL</Text>
                 <Field component={CustomInput} name="url" />
               </View>
@@ -99,6 +101,7 @@ function AddSite({navigation}) {
                 />
               </View>
             </View>
+          
 
             <View style={styles.butView}>
               <View style={styles.but1}>
@@ -116,7 +119,7 @@ function AddSite({navigation}) {
                 />
               </View>
             </View>
-          </>
+          </ScrollView>
         )}
       </Formik>
     </KeyboardAvoidingView>
@@ -129,13 +132,14 @@ const styles = StyleSheet.create({
     fontSize: Platform.OS === 'ios' ? 20 : 15,
     color: Platform.OS === 'ios' ? '#c9ccd1' : 'black',
     marginTop: Platform.OS === 'android' ? 5 : 0,
-    marginLeft: Platform.OS === 'android' ? 18 : 20,
+    marginLeft: Platform.OS === 'android' ? 18 : 30,
   },
 
   text2: {
     fontSize: Platform.OS === 'ios' ? 20 : 15,
     color: Platform.OS === 'ios' ? '#c9ccd1' : 'black',
     marginTop: Platform.OS === 'android' ? 5 : 0,
+    marginLeft:30
   },
 
   notes: {
@@ -145,7 +149,7 @@ const styles = StyleSheet.create({
 
   but2: {
     marginLeft: 2,
-    width: 195,
+    width: '50%',
   },
 
   bossCon: {
@@ -153,24 +157,18 @@ const styles = StyleSheet.create({
   },
 
   but1: {
-    width: 195,
+    width: '50%',
   },
 
   butView: {
-    flex: 1,
+    flex:1,
+    marginTop:100,
     flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: Platform.OS === 'android' ? 9 : 74,
-  },
-
-  con1: {
-    marginTop: Platform.OS === 'android' ? 0 : 20,
   },
 
   entryCon: {
-    flex: 12,
-    alignItems: 'center',
-    marginTop: 20,
+    flex:9,
+    marginTop: 50,
   },
 });
 export default AddSite;

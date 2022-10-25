@@ -42,6 +42,7 @@ function ListDisplay(props) {
   }
 
   return (
+    <View style={{alignItems:"center",marginTop:30}}>
     <View key={ele.id} style={styles.main_con}>
       <TouchableOpacity
         onLongPress={removeData}
@@ -70,15 +71,15 @@ function ListDisplay(props) {
         <Text>{ele.url.toLowerCase()}</Text>
       </View>
     </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   main_con: {
     backgroundColor: 'white',
-    marginLeft: 20,
-    marginTop: 20,
-    marginRight: 20,
+    width:'85%',
+    justifyContent:"center",
     borderRadius: 6,
   },
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet,KeyboardAvoidingView} from 'react-native';
+import {View, StyleSheet,ScrollView} from 'react-native';
 import CustomInput from '../component/CustomInput';
 import {Formik, Field} from 'formik';
 import Button from '../component/AuthenticationButton';
@@ -16,19 +16,31 @@ function SignUp({navigation}) {
   }
 
   return (
-    <LinearGradient colors={['#1baaff', '#0e85ff']} style={styles.main_con}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.workCon}>
-        <Formik
+    <LinearGradient colors={['#1baaff', '#0e85ff']} style={styles.main_con}> 
+    <ScrollView>
+    <Formik
           initialValues={{initialValues}}
           onSubmit={(values,{resetForm}) => {
-            if(values.password !== values.confirmPassword ||(!(/(91)(\d){10}\b/.test(values.phoneNumber))) ){
-              Toast.show('10 digit mobile number starting with 91 or Confirm Password Not Matching');
+
+            if (!/(91)(\d){10}\b/.test(values.phoneNumber) ) {
+              if((values.password !== values.confirmPassword) || values.password.length !== 4)
+                Toast.show('Enter proper credentials');
+              
+            }
+
+            if (/(91)(\d){10}\b/.test(values.phoneNumber) ) {
+              if((values.password !== values.confirmPassword) || values.password.length !== 4)
+                Toast.show('Enter Proper Password');
+              
+            }
+
+            if (!(/(91)(\d){10}\b/.test(values.phoneNumber))) {
+              if((values.password === values.confirmPassword) || values.password.length === 4)
+                Toast.show('Enter Mobile number with 91');
             }
         
             if(/(91)(\d){10}\b/.test(values.phoneNumber)){
-              if(values.password === values.confirmPassword){
+              if(values.password === values.confirmPassword || values.password.length === 4){
                     resetForm({initialValues})
                     Toast.show('Sign In Please');
                     navigation.navigate('Sign In');
@@ -36,8 +48,8 @@ function SignUp({navigation}) {
             }
           }}>
           {({handleSubmit, isValid}) => (
-            <View style={styles.main_con}>
-              <View style={{marginBottom: 20}}>
+            <>
+              <View style={{marginTop:10}}>
                 <Field
                   component={CustomInput}
                   name="phoneNumber"
@@ -70,10 +82,10 @@ function SignUp({navigation}) {
                   disabled={!isValid}
                 />
               </View>
-            </View>
+            </>
           )}
         </Formik>
-</KeyboardAvoidingView>
+        </ScrollView>
     </LinearGradient>
   );
 }

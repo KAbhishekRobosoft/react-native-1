@@ -5,7 +5,6 @@ import {
   Image,
   Text,
   KeyboardAvoidingView,
-  ScrollView,
 } from 'react-native';
 import TopNavigation from '../utils/TopNavigation';
 
@@ -14,6 +13,7 @@ import TopNavigation from '../utils/TopNavigation';
 
 function UserAuthentication() {
   return (
+    
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.main_con}>
@@ -39,21 +39,21 @@ const styles = StyleSheet.create({
   },
 
   sub_con1: {
-    flex: 1,
+    flex: 3,
     flexDirection: 'row',
     justifyContent: 'center',
   },
 
   sub_con2: {
-    flex: 3,
+    flex: 6,
   },
 
   lock_img: {
-    marginTop: 60,
+    marginTop: 55,
   },
 
   textDes: {
-    marginTop: 70,
+    marginTop: 55,
     marginLeft: 10,
   },
 

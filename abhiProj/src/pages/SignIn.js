@@ -5,7 +5,6 @@ import {
   Text,
   Pressable,
   Image,
-  KeyboardAvoidingView,
   ScrollView,
 } from 'react-native';
 import CustomInput from '../component/CustomInput';
@@ -39,16 +38,25 @@ function SignIn() {
   return (
     <LinearGradient colors={['#1baaff', '#0e85ff']} style={styles.main_con}>
       <ScrollView>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.workCon}>
         <Formik
           initialValues={{initialValues}}
           onSubmit={(values, {resetForm}) => {
             
-            if (!/(91)(\d){10}\b/.test(values.phoneNumber) || (values.password.length > 4 || values.password.length < 4) ) {
-                Toast.show('Proper Indian Mobile Number with 91 or 4 digit MPIN');
+            if (!/(91)(\d){10}\b/.test(values.phoneNumber) ) {
+              if(values.password.length  === 4)
+                Toast.show('Enter Mobile Number with 91');
               
+            }
+
+            if (/(91)(\d){10}\b/.test(values.phoneNumber) ) {
+              if(values.password.length < 4 || values.password.length > 4)
+                Toast.show('Enter Proper 4 digit MPIN');
+              
+            }
+
+            if (!(/(91)(\d){10}\b/.test(values.phoneNumber))) {
+              if(values.password.length < 4 || values.password.length > 4)
+                Toast.show('Enter proper credentials');
             }
 
             if (/(91)(\d){10}\b/.test(values.phoneNumber)) {
@@ -60,8 +68,8 @@ function SignIn() {
             }
           }}>
           {({handleSubmit, isValid}) => (
-            <View style={styles.main_con}>
-              <View style={{marginBottom: 30}}>
+            <>
+              <View>
                 <Field
                   component={CustomInput}
                   name="phoneNumber"
@@ -69,6 +77,7 @@ function SignIn() {
                   keyboardType="numeric"
                 />
               </View>
+              
               <View>
                 <Field
                   component={PasswordToggleInput}
@@ -77,11 +86,13 @@ function SignIn() {
                   secureTextEntry
                 />
               </View>
+                
               <View style={styles.forgotText}>
                 <Pressable>
                   <Text style={styles.forgotDes}>Forgot your password?</Text>
                 </Pressable>
               </View>
+          
 
               <View style={styles.butView}>
                 <Button
@@ -90,17 +101,19 @@ function SignIn() {
                   name="SIGN IN"
                 />
               </View>
+
               <View style={styles.finger}>
                 <Image source={require('../images/finger.png')} />
               </View>
+
               <View style={styles.textCon}>
                 <Text style={styles.text1}>OR</Text>
                 <Text style={styles.text2}>USE YOUR FINGERPRINT TO LOGIN</Text>
               </View>
-            </View>
+
+            </>
           )}
         </Formik>
-      </KeyboardAvoidingView>
       </ScrollView>
     </LinearGradient>
   );
@@ -108,17 +121,14 @@ function SignIn() {
 
 const styles = StyleSheet.create({
   main_con: {
-    flex: 1,
+    flex:1,
     alignItems: 'center',
   },
+
 
   forgotText: {
     marginTop: 20,
     marginRight: 170,
-  },
-
-  workCon: {
-    marginTop: 40,
   },
 
   finger: {
@@ -149,6 +159,7 @@ const styles = StyleSheet.create({
   },
 
   butView: {
+    flex:1,
     height: 40,
     width: '40%',
     backgroundColor: 'white',
