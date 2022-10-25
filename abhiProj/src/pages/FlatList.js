@@ -11,14 +11,14 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {types} from '../utils/HardCodedData';
+import { types } from '../utils/HardCodedData';
 import {Dropdown} from 'react-native-element-dropdown';
 import {useDispatch, useSelector} from 'react-redux';
 import ListDisplay from '../component/ListDisplay';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {logout} from '../redux/AuthenticationSlice';
 import {filterData} from '../redux/AddDataSlice';
-import {filterCategory} from '../redux/AddDataSlice';
+import { filterCategory } from '../redux/AddDataSlice';
 
 function FlatList({navigation}) {
   const [text, setText] = useState(false);
@@ -43,39 +43,43 @@ function FlatList({navigation}) {
   }
 
   return (
-    <View style={styles.main_con}>
+
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.main_con}>
+
       <View style={styles.bgm1}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <View style={styles.imgView}>
-            <Pressable>
-              <Image source={require('../images/burger.png')} />
-            </Pressable>
-          </View>
-          <View style={styles.con1}>
-            <Text style={styles.listText}>PASS{'\n'}MANAGER</Text>
-          </View>
+      <View style={{flexDirection:"row",alignItems:"center"}}>
+        <View style={styles.imgView}>
+          <Pressable>
+            <Image source={require('../images/burger.png')} />
+          </Pressable>
         </View>
-        <View style={{flexDirection: 'row'}}>
-          <View style={styles.searchView}>
-            <Pressable
-              onPress={() => {
-                setText(true);
-              }}>
-              <Image source={require('../images/search.png')} />
-            </Pressable>
-          </View>
+        <View style={styles.con1}>
+          <Text style={styles.listText}>PASS{'\n'}MANAGER</Text>
+        </View>
+        </View>
+        <View style={{flexDirection:"row"}}>
+        <View style={styles.searchView}>
+          <Pressable
+            onPress={() => {
+              setText(true);
+            }}>
+            <Image source={require('../images/search.png')} />
+          </Pressable>
+        </View>
 
-          <View style={styles.syncView}>
-            <Pressable>
-              <Image source={require('../images/sync.png')} />
-            </Pressable>
-          </View>
+        <View style={styles.syncView}>
+          <Pressable>
+            <Image source={require('../images/sync.png')} />
+          </Pressable>
+        </View>
 
-          <View style={styles.profileView}>
-            <Pressable onPress={logOutFromAccount}>
-              <Image source={require('../images/profile.png')} />
-            </Pressable>
-          </View>
+        <View style={styles.profileView}>
+          <Pressable onPress={logOutFromAccount}>
+            <Image source={require('../images/profile.png')} />
+          </Pressable>
+        </View>
         </View>
       </View>
 
@@ -101,30 +105,31 @@ function FlatList({navigation}) {
         {!text && (
           <View style={styles.dropView}>
             <View>
-              <Dropdown
-                style={styles.dropdown}
-                placeholderStyle={styles.placeholderStyle}
-                selectedTextStyle={styles.selectedTextStyle}
-                inputSearchStyle={styles.inputSearchStyle}
-                data={types}
-                value="All"
-                maxHeight={300}
-                labelField="label"
-                valueField="value"
-                onChange={item => {
-                  dispatch(filterCategory(item.value));
-                }}
-              />
+            <Dropdown
+              style={styles.dropdown}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              data={types}
+              value="All"
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              onChange={item => {
+                dispatch(filterCategory(item.value))
+              }}
+            />
             </View>
             <View style={styles.lengthCount}>
-              <Text style={styles.textCount}>{data.length}</Text>
+                <Text style={styles.textCount}>{data.length}</Text>
             </View>
+
           </View>
         )}
       </View>
 
       <View style={styles.listBack}>
-        <ScrollView>
+            <ScrollView>
           {data?.length > 0
             ? data.map(ele => {
                 let img = ele.siteName.toLowerCase();
@@ -138,14 +143,17 @@ function FlatList({navigation}) {
                 );
               })
             : null}
-        </ScrollView>
+
+            </ScrollView>
         <View style={styles.AddView}>
           <Pressable onPress={() => navigation.navigate('AddSite')}>
             <Image source={require('../images/add.png')} />
           </Pressable>
         </View>
       </View>
-    </View>
+   
+    </KeyboardAvoidingView>
+    
   );
 }
 
@@ -154,25 +162,25 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  textCount: {
-    textAlign: 'center',
-    fontSize: 18,
-    color: 'white',
-    width: 20,
-    fontWeight: 'bold',
+  textCount:{
+    textAlign:"center",
+    fontSize:18,
+    color:"white",
+    width:20,
+    fontWeight:"bold"
   },
 
-  lengthCount: {
-    backgroundColor: '#0e85ff',
-    marginTop: 10,
-    marginRight: 20,
-    borderRadius: 30,
+  lengthCount:{
+      backgroundColor:"#0e85ff",
+      marginTop:10,
+      marginRight:20,
+      borderRadius:30
   },
 
   dropView: {
     flexDirection: 'row',
-    alignItems: 'center',
-    marginRight: 15,
+    alignItems:'center',
+    marginRight:15
   },
 
   listBack: {
@@ -228,14 +236,17 @@ const styles = StyleSheet.create({
 
   bgm1: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent:"space-between",
     backgroundColor: '#0e85ff',
     alignItems: 'center',
+    width: '100%',
+    height: 100,
+
   },
 
   searchView: {
     marginTop: Platform.OS === 'ios' ? 10 : 10,
-    marginRight: 20,
+    marginRight:20
   },
 
   txtInp: {
@@ -243,10 +254,10 @@ const styles = StyleSheet.create({
   },
 
   AddView: {
-    marginTop: 130,
-    marginLeft: 20,
-    justifyContent: 'flex-end',
-    position: 'absolute',
+    marginTop:130,
+    marginLeft:20,
+    justifyContent:"flex-end",
+    position:"absolute"
   },
 
   dropdown: {
@@ -254,12 +265,13 @@ const styles = StyleSheet.create({
     borderWidth: Platform.OS === 'ios' ? 2 : 1,
     padding: 5,
     width: 170,
-    marginTop: 10,
+    marginTop:10,
     borderRadius: 6,
-    marginRight: 10,
+    marginRight:10,
     borderColor: Platform.OS === 'ios' ? '#e9e9ea' : 'black',
     backgroundColor: '#f5f7fb',
   },
+
 
   text1: {
     fontSize: 20,
@@ -275,7 +287,7 @@ const styles = StyleSheet.create({
   selectedTextStyle: {
     fontSize: 16,
   },
-
+ 
   inputSearchStyle: {
     height: 40,
     fontSize: 16,
@@ -283,7 +295,7 @@ const styles = StyleSheet.create({
 
   profileView: {
     marginTop: Platform.OS === 'ios' ? 10 : 10,
-    marginRight: 20,
+    marginRight:20
   },
 
   syncView: {
