@@ -8,6 +8,7 @@ import logger from "redux-logger";
 import thunk from "redux-thunk";
 
 
+
 const persistConfig= {
     key:"root",
     version:1,
@@ -20,9 +21,16 @@ const AuthConfig= {
     whitelist:["mPin"]
 }
 
+const PostConfig= {
+    key:"authSite",
+    storage:AsyncStorage,
+    whitelist:["mPin"]
+}
+
 const reducer2= combineReducers({
     addDetails:reducer,
-    authSite:persistReducer(AuthConfig,reducer1)
+    authSite:persistReducer(AuthConfig,reducer1),
+    posts:persistReducer(PostConfig,reducer1)
 })
 
 const persistedReducer= persistReducer(persistConfig,reducer2)
