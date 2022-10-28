@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import {
   View,
   StyleSheet,
@@ -9,6 +9,7 @@ import {
   TextInput,
   Platform,
   KeyboardAvoidingView,
+  ActivityIndicator,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { types } from '../utils/HardCodedData';
@@ -19,12 +20,17 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {logout} from '../redux/AuthenticationSlice';
 import {filterData} from '../redux/AddDataSlice';
 import { filterCategory } from '../redux/AddDataSlice';
+import { getPost } from '../redux/PostSlice';
 
 function FlatList({navigation}) {
+  let resp= useSelector((state)=>state.posts)
+  useEffect(() => {
+     dispatch(getPost(1));
+  }, []);
+  console.log(resp.user)
   const [text, setText] = useState(false);
   const dispatch = useDispatch();
   let data = useSelector(state => state.addDetails.userData);
-
   function searchText(getinpText) {
     dispatch(filterData(getinpText));
   }
@@ -41,13 +47,18 @@ function FlatList({navigation}) {
     }
     dispatch(logout());
   }
-
+  if(resp.isLoading){
+    return(
+      <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
+         <Text>Loading...</Text>
+      </View>
+    )
+  }
   return (
 
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.main_con}>
-
       <View style={styles.bgm1}>
       <View style={{flexDirection:"row",alignItems:"center"}}>
         <View style={styles.imgView}>
@@ -130,8 +141,8 @@ function FlatList({navigation}) {
 
       <View style={styles.listBack}>
             <ScrollView>
-          {data?.length > 0
-            ? data.map(ele => {
+          {resp.length > 0
+            ? resp.map(ele => {
                 let img = ele.siteName.toLowerCase();
                 return (
                   <ListDisplay
