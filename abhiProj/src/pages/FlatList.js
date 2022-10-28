@@ -23,17 +23,15 @@ import { getPost } from '../redux/PostSlice';
 
 function FlatList({navigation}) {
   let resp= useSelector((state)=>state.posts)
+  const dispatch = useDispatch();
   useEffect(() => {
      dispatch(getPost(1));
   }, []);
-  console.log(resp.user)
   const [text, setText] = useState(false);
-  const dispatch = useDispatch();
   let data = useSelector(state => state.addDetails.userData);
   function searchText(getinpText) {
     dispatch(filterData(getinpText));
   }
-
   function searchList() {
     setText(false);
   }
@@ -58,6 +56,7 @@ function FlatList({navigation}) {
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.main_con}>
+      {console.log("that is do they"+resp.user[0])}
       <View style={styles.bgm1}>
       <View style={{flexDirection:"row",alignItems:"center"}}>
         <View style={styles.imgView}>
@@ -140,8 +139,9 @@ function FlatList({navigation}) {
 
       <View style={styles.listBack}>
             <ScrollView>
-          {resp.length > 0
-            ? resp.map(ele => {
+          {data.length > 0
+            ? data.map(ele => {
+                 
                 let img = ele.siteName.toLowerCase();
                 return (
                   <ListDisplay

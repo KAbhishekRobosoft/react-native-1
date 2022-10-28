@@ -10,7 +10,7 @@ const initialState = {
 
 export const getPost= createAsyncThunk('posts/getPost',(userId)=>{
     return axios.get(BASE_URL+'?userId='+`${userId}`)
-    .then((response)=>console.log(response))
+    .then((response)=>response.data)
 })
 
 
@@ -23,7 +23,8 @@ const postSlice= createSlice({
     })
     builder.addCase(getPost.fulfilled,(state,action)=>{
         state.isLoading= false
-        state.user= action.payload
+
+        state.user= [...action.payload]
     })
     builder.addCase(getPost.rejected,(state,action)=>{
       state.isLoading= false

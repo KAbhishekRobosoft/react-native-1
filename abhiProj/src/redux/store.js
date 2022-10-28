@@ -5,6 +5,7 @@ import logger from "redux-logger";
 import thunk from "redux-thunk";
 import { reducer3 } from "./PostSlice";
 
+
 const store= configureStore({
     reducer:{
         addDetails:reducer,
@@ -13,5 +14,7 @@ const store= configureStore({
     },
     middleware: [thunk,logger]
 })
+
+
 
 export default store
