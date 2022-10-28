@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Toast from 'react-native-simple-toast';
 import {
   View,
@@ -11,25 +11,29 @@ import {
 import {Formik, Field} from 'formik';
 import CustomInput from '../component/CustomInput';
 import DropDown from '../component/DropDown'
+import FlatList from './FlatList';
 import EntryButton from '../component/CRUDButton'
 import {addData} from '../redux/AddDataSlice';
 import {useDispatch} from 'react-redux';
 import {images} from '../utils/HardCodedData'
 import PasswordToggleInput from '../component/PasswordToggleInput';
+import { addPost } from '../redux/PostSlice';
 
 function AddSite({navigation}) {
 
 //Used to call the action mentioned in the reducer
   const dispatch = useDispatch();
-
+  const [render,setRender]= useState(false)
 //Sending the object received through form to add it to the state   
   function sendData(obj) {
     if (obj === initialValues) Toast.show('Please enter Values');
     else {
       obj['id']= Math.floor(Math.random() * 100)
+      obj['userId']= 1
       dispatch(addData(obj));
-      navigation.navigate('List');
+      dispatch(addPost(obj))
       Toast.show('Saved Successfully');
+      navigation.navigate("List")
     }
   }
 

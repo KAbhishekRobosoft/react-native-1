@@ -5,7 +5,7 @@ const addSiteReducer = createSlice({
   name: 'site',
   initialState:{
     userData:[],
-    userTemp:[]
+    userTemp:[],
   },
 
   //Reducer function

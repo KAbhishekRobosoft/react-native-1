@@ -8,9 +8,28 @@ const initialState = {
   error: '',
 };
 
-export const getPost= createAsyncThunk('posts/getPost',(userId)=>{
-    return axios.get(BASE_URL+'?userId='+`${userId}`)
-    .then((response)=>response.data)
+export const getPost= createAsyncThunk('posts/getPost',async (userId)=>{
+    const response = await axios.get(BASE_URL + '?userId=' + `${userId}`);
+  return response.data;
+})
+
+export const addPost= createAsyncThunk('posts/addPost',async (obj)=>{
+    await axios.post(BASE_URL, {
+    id:obj.id,
+    dropdown: obj.dropdown,
+    notes:obj.notes,
+    password:obj.password,
+    siteName:obj.siteName,
+    url:obj.url,
+    userName:obj.userName,
+    userId:obj.userId
+  })
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
 })
 
 
@@ -27,6 +46,16 @@ const postSlice= createSlice({
         state.user= [...action.payload]
     })
     builder.addCase(getPost.rejected,(state,action)=>{
+      state.isLoading= false
+      state.error= action.error.message
+    })
+    builder.addCase(addPost.pending,(state)=>{
+      state.isLoading= true
+    })
+    builder.addCase(addPost.fulfilled,(state,action)=>{
+        state.isLoading= false
+    })
+    builder.addCase(addPost.rejected,(state,action)=>{
       state.isLoading= false
       state.error= action.error.message
     })

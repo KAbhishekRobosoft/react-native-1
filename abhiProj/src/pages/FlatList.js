@@ -22,13 +22,13 @@ import { filterCategory } from '../redux/AddDataSlice';
 import { getPost } from '../redux/PostSlice';
 
 function FlatList({navigation}) {
+  useEffect(() => {
+       dispatch(getPost(1));
+ }, []);
+
   let resp= useSelector((state)=>state.posts)
   const dispatch = useDispatch();
-  useEffect(() => {
-     dispatch(getPost(1));
-  }, []);
   const [text, setText] = useState(false);
-  let data = useSelector(state => state.addDetails.userData);
   function searchText(getinpText) {
     dispatch(filterData(getinpText));
   }
@@ -44,6 +44,7 @@ function FlatList({navigation}) {
     }
     dispatch(logout());
   }
+
   if(resp.isLoading){
     return(
       <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
@@ -56,7 +57,6 @@ function FlatList({navigation}) {
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.main_con}>
-      {console.log("that is do they"+resp.user[0])}
       <View style={styles.bgm1}>
       <View style={{flexDirection:"row",alignItems:"center"}}>
         <View style={styles.imgView}>
@@ -130,7 +130,7 @@ function FlatList({navigation}) {
             />
             </View>
             <View style={styles.lengthCount}>
-                <Text style={styles.textCount}>{data.length}</Text>
+                <Text style={styles.textCount}>{resp.user.length}</Text>
             </View>
 
           </View>
@@ -139,8 +139,8 @@ function FlatList({navigation}) {
 
       <View style={styles.listBack}>
             <ScrollView>
-          {data.length > 0
-            ? data.map(ele => {
+          {resp.user.length > 0
+            ? resp.user.map(ele => {
                  
                 let img = ele.siteName.toLowerCase();
                 return (
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
     textAlign:"center",
     fontSize:18,
     color:"white",
-    width:20,
+    width:40,
     fontWeight:"bold"
   },
 
