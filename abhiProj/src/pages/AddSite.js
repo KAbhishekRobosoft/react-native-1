@@ -129,14 +129,15 @@ const styles = StyleSheet.create({
   text1: {
     fontSize: Platform.OS === 'ios' ? 20 : 15,
     color: Platform.OS === 'ios' ? '#c9ccd1' : 'black',
-    marginTop: Platform.OS === 'android' ? 5 : 0,
+    marginTop: Platform.OS === 'android' ? 5 : 5,
     marginLeft: Platform.OS === 'android' ? 18 : 20,
   },
 
   text2: {
     fontSize: Platform.OS === 'ios' ? 20 : 15,
     color: Platform.OS === 'ios' ? '#c9ccd1' : 'black',
-    marginTop: Platform.OS === 'android' ? 5 : 0,
+    marginTop: Platform.OS === 'android' ? 5 : 5,
+    marginLeft:20
   },
 
   notes: {

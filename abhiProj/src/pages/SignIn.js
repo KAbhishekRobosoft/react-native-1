@@ -44,7 +44,7 @@ function SignIn() {
             
             if (!/(91)(\d){10}\b/.test(values.phoneNumber) ) {
               if(values.password.length  === 4)
-                Toast.show('Enter Mobile Number with 91');
+                Toast.show('Enter 91 followed by a 10-digit Number');
               
             }
 
@@ -133,6 +133,7 @@ const styles = StyleSheet.create({
 
   finger: {
     marginTop: 50,
+    alignItems:"center"
   },
 
   textCon: {

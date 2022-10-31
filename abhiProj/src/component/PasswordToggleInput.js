@@ -31,6 +31,7 @@ function PasswordToggleInput(props) {
           <TextInput
             defaultValue={defaultValue}
             editable={editable}
+            placeholderTextColor="#7e8491"
             value={value}
             onChangeText={text => onChange(name)(text)}
             onBlur={() => {

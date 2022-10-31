@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     height: Platform.OS === "ios" ? 45 : 35,
     borderWidth: Platform.OS === 'ios' ? 2 : 1,
     padding: 10,
-    width: '95%',
+    width: '100%',
     borderRadius: 6,
     borderColor: Platform.OS === 'ios' ? '#e9e9ea' : 'black',
     backgroundColor: '#f5f7fb',

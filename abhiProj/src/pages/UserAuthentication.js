@@ -12,6 +12,7 @@ import TopNavigation from '../utils/TopNavigation';
 //Structure in top navigation component
 
 function UserAuthentication() {
+ 
   return (
     
     <KeyboardAvoidingView
@@ -42,6 +43,7 @@ const styles = StyleSheet.create({
     flex: 3,
     flexDirection: 'row',
     justifyContent: 'center',
+    alignItems:"center"
   },
 
   sub_con2: {

@@ -13,6 +13,7 @@ const CustomInput = props => {
     <View style={styles.txtCon}>
     <TextInput
       style={styles.textInp1}
+      placeholderTextColor="#7e8491"
       editable={editable}
       value={value}
       defaultValue={defaultValue}
@@ -39,6 +40,7 @@ const styles = StyleSheet.create({
     borderWidth: Platform.OS === "ios" ?  2 : 1,
     borderColor: Platform.OS === "ios" ? '#e9e9ea' : 'black',
     borderRadius: 6,
+    fontWeight:"bold",
     fontSize: 16,
     padding: 10,
     backgroundColor: '#f5f7fb',
