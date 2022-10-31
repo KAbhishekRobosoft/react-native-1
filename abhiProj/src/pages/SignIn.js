@@ -13,21 +13,17 @@ import Button from '../component/AuthenticationButton';
 import LinearGradient from 'react-native-linear-gradient';
 import PasswordToggleInput from '../component/PasswordToggleInput';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {login} from '../redux/AuthenticationSlice';
 import Toast from 'react-native-simple-toast';
+import {loginUser} from '../redux/userSlice';
 
 function SignIn() {
   const dispatch = useDispatch();
+  const userRes = useSelector(state => state.users);
+
   const signIn = async values => {
-    const {password} = values;
-    let mPin = password;
-    try {
-      await AsyncStorage.setItem('mPin', mPin);
-    } catch (e) {
-      console.log(e);
-    }
-    dispatch(login(mPin));
+    dispatch(loginUser(values));
   };
 
   const initialValues = {
@@ -41,21 +37,18 @@ function SignIn() {
         <Formik
           initialValues={{initialValues}}
           onSubmit={(values, {resetForm}) => {
-            
-            if (!/(91)(\d){10}\b/.test(values.phoneNumber) ) {
-              if(values.password.length  === 4)
+            if (!/(91)(\d){10}\b/.test(values.phoneNumber)) {
+              if (values.password.length === 4)
                 Toast.show('Enter Mobile Number with 91');
-              
             }
 
-            if (/(91)(\d){10}\b/.test(values.phoneNumber) ) {
-              if(values.password.length < 4 || values.password.length > 4)
+            if (/(91)(\d){10}\b/.test(values.phoneNumber)) {
+              if (values.password.length < 4 || values.password.length > 4)
                 Toast.show('Enter Proper 4 digit MPIN');
-              
             }
 
-            if (!(/(91)(\d){10}\b/.test(values.phoneNumber))) {
-              if(values.password.length < 4 || values.password.length > 4)
+            if (!/(91)(\d){10}\b/.test(values.phoneNumber)) {
+              if (values.password.length < 4 || values.password.length > 4)
                 Toast.show('Enter proper credentials');
             }
 
@@ -77,7 +70,7 @@ function SignIn() {
                   keyboardType="numeric"
                 />
               </View>
-              
+
               <View>
                 <Field
                   component={PasswordToggleInput}
@@ -86,13 +79,12 @@ function SignIn() {
                   secureTextEntry
                 />
               </View>
-                
+
               <View style={styles.forgotText}>
                 <Pressable>
                   <Text style={styles.forgotDes}>Forgot your password?</Text>
                 </Pressable>
               </View>
-          
 
               <View style={styles.butView}>
                 <Button
@@ -110,7 +102,6 @@ function SignIn() {
                 <Text style={styles.text1}>OR</Text>
                 <Text style={styles.text2}>USE YOUR FINGERPRINT TO LOGIN</Text>
               </View>
-
             </>
           )}
         </Formik>
@@ -121,10 +112,9 @@ function SignIn() {
 
 const styles = StyleSheet.create({
   main_con: {
-    flex:1,
+    flex: 1,
     alignItems: 'center',
   },
-
 
   forgotText: {
     marginTop: 20,
@@ -159,7 +149,7 @@ const styles = StyleSheet.create({
   },
 
   butView: {
-    flex:1,
+    flex: 1,
     height: 40,
     width: '40%',
     backgroundColor: 'white',

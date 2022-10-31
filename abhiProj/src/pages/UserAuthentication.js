@@ -6,12 +6,22 @@ import {
   Text,
   KeyboardAvoidingView,
 } from 'react-native';
+import { useSelector } from 'react-redux';
 import TopNavigation from '../utils/TopNavigation';
 
 //Contains Sign in and sign Up screens in Top navigation format.
 //Structure in top navigation component
 
 function UserAuthentication() {
+  userRes= useSelector(state=>state.users)
+  
+  if(userRes.isLoading){
+    return(
+      <View style={{justifyContent:"center",alignItems:"center",flex:1}}>
+              <Text>Logging you In</Text>
+      </View>
+    )
+  }
   return (
     
     <KeyboardAvoidingView

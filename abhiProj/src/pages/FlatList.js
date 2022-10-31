@@ -22,8 +22,10 @@ import { filterCategory } from '../redux/AddDataSlice';
 import { getPost } from '../redux/PostSlice';
 
 function FlatList({navigation}) {
+  const userId= useSelector(state=>state.users.userId)
+
   useEffect(() => {
-       dispatch(getPost(1));
+       dispatch(getPost(userId));
  }, []);
 
   let resp= useSelector((state)=>state.posts)
