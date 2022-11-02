@@ -6,6 +6,7 @@ const addSiteReducer = createSlice({
   initialState:{
     userData:[],
     userTemp:[],
+    isLoading:true,
   },
 
   //Reducer function
@@ -13,8 +14,16 @@ const addSiteReducer = createSlice({
 
 //Add Object to state
     addData:(state, action) => {
-      state.userData.push(action.payload)
-      state.userTemp.push(action.payload)
+      state.userData= []
+      state.userTemp= []
+      state.userData= [...action.payload]
+      state.userTemp= [...action.payload]
+      state.isLoading= false
+    },
+
+    addSingleData:(state,action)=>{
+        state.userData.push(action.payload)
+        state.userTemp.push(action.payload)
     },
 
 //Updation of state
@@ -58,5 +67,5 @@ const addSiteReducer = createSlice({
 
   }})
 
-export const {addData,updateData,deleteData,filterData,filterCategory} = addSiteReducer.actions;
+export const {addData,updateData,deleteData,filterData,filterCategory,addSingleData} = addSiteReducer.actions;
 export const reducer= addSiteReducer.reducer;

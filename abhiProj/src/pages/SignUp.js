@@ -6,8 +6,14 @@ import Button from '../component/AuthenticationButton';
 import LinearGradient from 'react-native-linear-gradient';
 import PasswordToggleInput from '../component/PasswordToggleInput';
 import Toast from 'react-native-simple-toast';
+import { registerUser } from '../redux/userSlice';
 
 function SignUp({navigation}) {
+  async function newUser(values){
+    const respo= await registerUser(values)
+    Toast.show('Sign In Please');
+    navigation.goBack('Sign In');
+  }
 
   const initialValues= {
     phoneNumber: '',
@@ -42,8 +48,7 @@ function SignUp({navigation}) {
             if(/(91)(\d){10}\b/.test(values.phoneNumber)){
               if(values.password === values.confirmPassword || values.password.length === 4){
                     resetForm({initialValues})
-                    Toast.show('Sign In Please');
-                    navigation.navigate('Sign In');
+                    newUser(values)
               }
             }
           }}>

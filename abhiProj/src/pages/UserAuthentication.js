@@ -13,15 +13,7 @@ import TopNavigation from '../utils/TopNavigation';
 //Structure in top navigation component
 
 function UserAuthentication() {
-  userRes= useSelector(state=>state.users)
   
-  if(userRes.isLoading){
-    return(
-      <View style={{justifyContent:"center",alignItems:"center",flex:1}}>
-              <Text>Logging you In</Text>
-      </View>
-    )
-  }
   return (
     
     <KeyboardAvoidingView

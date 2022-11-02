@@ -11,27 +11,27 @@ import {
 import {Formik, Field} from 'formik';
 import CustomInput from '../component/CustomInput';
 import DropDown from '../component/DropDown'
-import FlatList from './FlatList';
 import EntryButton from '../component/CRUDButton'
-import {addData} from '../redux/AddDataSlice';
-import {useDispatch} from 'react-redux';
+import { addSingleData } from '../redux/AddDataSlice';
+import {useDispatch, useSelector} from 'react-redux';
 import {images} from '../utils/HardCodedData'
 import PasswordToggleInput from '../component/PasswordToggleInput';
 import { addPost } from '../redux/PostSlice';
 
 function AddSite({navigation}) {
-
+  const userAuth= useSelector(state=>state.authSite)
+  const userData= useSelector(state=>state.addDetails)
 //Used to call the action mentioned in the reducer
   const dispatch = useDispatch();
-  const [render,setRender]= useState(false)
+
 //Sending the object received through form to add it to the state   
   function sendData(obj) {
     if (obj === initialValues) Toast.show('Please enter Values');
     else {
       obj['id']= Math.floor(Math.random() * 100)
-      obj['userId']= 1
-      dispatch(addData(obj));
+      obj['userId']= userAuth.userId
       dispatch(addPost(obj))
+      dispatch(addSingleData(obj))
       Toast.show('Saved Successfully');
       navigation.navigate("List")
     }

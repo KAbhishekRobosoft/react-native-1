@@ -14,6 +14,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {deleteData} from '../redux/AddDataSlice';
 import {useDispatch} from 'react-redux';
 import Toast from 'react-native-simple-toast';
+import { deletePost } from '../redux/PostSlice';
 
 function ListDisplay(props) {
   const dispatch = useDispatch();
@@ -28,6 +29,7 @@ function ListDisplay(props) {
       {
         text: 'Yes',
         onPress: () => {
+          dispatch(deletePost(ele.id))
           dispatch(deleteData(ele.id));
           Toast.show('Deleted Successfully');
         },

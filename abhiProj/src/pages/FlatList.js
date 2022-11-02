@@ -9,6 +9,7 @@ import {
   TextInput,
   Platform,
   KeyboardAvoidingView,
+  ActivityIndicator,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { types } from '../utils/HardCodedData';
@@ -17,26 +18,31 @@ import {useDispatch, useSelector} from 'react-redux';
 import ListDisplay from '../component/ListDisplay';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {logout} from '../redux/AuthenticationSlice';
-import {filterData} from '../redux/AddDataSlice';
+import {addData, filterData} from '../redux/AddDataSlice';
 import { filterCategory } from '../redux/AddDataSlice';
 import { getPost } from '../redux/PostSlice';
 
 function FlatList({navigation}) {
-  const userId= useSelector(state=>state.users.userId)
-
-  useEffect(() => {
-       dispatch(getPost(userId));
- }, []);
-
-  let resp= useSelector((state)=>state.posts)
+  
+  let resp= useSelector((state)=>state.addDetails)
+  let userAuth= useSelector(state=>state.authSite)
   const dispatch = useDispatch();
   const [text, setText] = useState(false);
+
   function searchText(getinpText) {
     dispatch(filterData(getinpText));
   }
+
   function searchList() {
     setText(false);
   }
+
+  useEffect(()=>{
+    setTimeout(async ()=>{
+      const response= await getPost(userAuth.userId)
+      dispatch(addData(response))
+    },1000)
+  },[])
 
   async function logOutFromAccount() {
     try {
@@ -50,12 +56,12 @@ function FlatList({navigation}) {
   if(resp.isLoading){
     return(
       <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-         <Text>Loading...</Text>
+        <ActivityIndicator size="large" />
       </View>
     )
   }
-  return (
 
+  return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.main_con}>
@@ -132,7 +138,7 @@ function FlatList({navigation}) {
             />
             </View>
             <View style={styles.lengthCount}>
-                <Text style={styles.textCount}>{resp.user.length}</Text>
+                <Text style={styles.textCount}>{resp.userData.length}</Text>
             </View>
 
           </View>
@@ -141,8 +147,8 @@ function FlatList({navigation}) {
 
       <View style={styles.listBack}>
             <ScrollView>
-          {resp.user.length > 0
-            ? resp.user.map(ele => {
+          {resp.userData.length > 0
+            ? resp.userData.map(ele => {
                  
                 let img = ele.siteName.toLowerCase();
                 return (

@@ -11,6 +11,7 @@ import UserAuthentication from '../pages/UserAuthentication';
 function MainPage() {
   const dispatch = useDispatch();
   const auth= useSelector((state)=>state.authSite)
+  let resp= useSelector((state)=>state.addDetails)
 
   useEffect(() => {
     setTimeout(async () => {

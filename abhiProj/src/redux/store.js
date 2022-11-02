@@ -7,7 +7,7 @@ import { combineReducers } from "@reduxjs/toolkit";
 import logger from "redux-logger";
 import thunk from "redux-thunk";
 import { reducer3 } from "./PostSlice";
-import { reducer4 } from "./userSlice";
+
 
 
 
@@ -17,30 +17,10 @@ const persistConfig= {
     storage:AsyncStorage
 }
 
-const AuthConfig= {
-    key:"authSite",
-    storage:AsyncStorage,
-    whitelist:["mPin"]
-}
-
-const PostConfig= {
-    key:"postSite",
-    storage:AsyncStorage,
-    whitelist:["user"]
-}
-
-const UserConfig= {
-    key:"userSite",
-    storage:AsyncStorage,
-    whitelist:["userId"]
-}
-
-
 const reducer2= combineReducers({
     addDetails:reducer,
-    authSite:persistReducer(AuthConfig,reducer1),
-    posts:persistReducer(PostConfig,reducer3),
-    users:persistReducer(UserConfig,reducer4),
+    authSite:reducer1,
+    posts:reducer3
 })
 
 const persistedReducer= persistReducer(persistConfig,reducer2)

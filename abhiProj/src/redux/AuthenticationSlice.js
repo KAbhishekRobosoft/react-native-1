@@ -2,7 +2,8 @@ import {createSlice} from '@reduxjs/toolkit';
 
 const initialState ={
     isLoading:true,
-    mPin:null
+    mPin:null,
+    userId:null
 }
 
 const authenticateSite = createSlice({
@@ -20,7 +21,8 @@ const authenticateSite = createSlice({
     login:(state,action)=>{
         return{
             ...state,
-            mPin:action.payload,
+            mPin:action.payload.mPin,
+            userId:action.payload.userId,
             isLoading:false
         }
     },
@@ -29,6 +31,7 @@ const authenticateSite = createSlice({
         return{
             ...state,
             mPin:null,
+            userId:null,
             isLoading:false
         }
     },

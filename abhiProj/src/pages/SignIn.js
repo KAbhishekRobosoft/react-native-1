@@ -13,17 +13,27 @@ import Button from '../component/AuthenticationButton';
 import LinearGradient from 'react-native-linear-gradient';
 import PasswordToggleInput from '../component/PasswordToggleInput';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {login} from '../redux/AuthenticationSlice';
 import Toast from 'react-native-simple-toast';
-import {loginUser} from '../redux/userSlice';
+import { loginUser } from '../redux/userSlice';
 
 function SignIn() {
   const dispatch = useDispatch();
-  const userRes = useSelector(state => state.users);
-
   const signIn = async values => {
-    dispatch(loginUser(values));
+    const response = await loginUser(values);
+    if (response.hasOwnProperty('user')) {
+      const {password} = values;
+      let mPin = password;
+      try {
+        await AsyncStorage.setItem('mPin', mPin);
+      } catch (e) {
+        console.log(e);
+      }
+      dispatch(login({mPin:mPin,userId:response.user.id}));
+    } else {
+      Toast.show('User Does not exist');
+    }
   };
 
   const initialValues = {

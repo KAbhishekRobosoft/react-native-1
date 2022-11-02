@@ -11,13 +11,14 @@ import {
 import {Formik, Field} from 'formik';
 import DropDown from '../component/DropDown';
 import EntryButton from '../component/CRUDButton';
-import {useDispatch} from 'react-redux';
+import {useDispatch,useSelector} from 'react-redux';
 import { updateData } from '../redux/AddDataSlice';
 import CustomInput from '../component/CustomInput';
 import PasswordToggleInput from '../component/PasswordToggleInput';
+import { editPost } from '../redux/PostSlice';
 
 function EditSite({navigation,route}) {
-
+  const userAuth= useSelector(state=>state.authSite)
   const dispatch = useDispatch();
 
 //Data is brought here by sending data as parameter in flatlist page.  
@@ -32,8 +33,11 @@ function EditSite({navigation,route}) {
     if (obj === initialValues) Toast.show('Please enter Values');
     else {
       obj['id']= data.id
+      console.log(data.id+"hfggweqvw")
+      obj['userId']= userAuth.userId
       dispatch(updateData(obj));
-      navigation.navigate('List');
+      dispatch(editPost(obj,data.id))
+      navigation.goBack('List');
     }
   }
 
