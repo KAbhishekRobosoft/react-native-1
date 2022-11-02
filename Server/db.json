@@ -1,0 +1,76 @@
+{
+  "users": [
+    {
+      "mobileNumber": "919845296896",
+      "password": "$2a$10$7uSW1.aNuWqXcVTEpgsOG.MkBYvIRDcMITtUW98jNOq3bbtOVZvAa",
+      "id": 1
+    },
+    {
+      "mobileNumber": "919845212442",
+      "password": "$2a$10$p/j/PwhZpBo.YJRA5gUa2eYHJgrPle6BIJCo2gCSF6gkazjSpXzLm",
+      "id": 2
+    }
+  ],
+  "posts": [
+    {
+      "id": 66,
+      "dropdown": "Social Media",
+      "notes": "Sdasdaa",
+      "password": "sdasd",
+      "siteName": "Facebook",
+      "url": "Www.YouTube.com",
+      "userName": "Sdasd",
+      "userId": 1
+    },
+    {
+      "id": 36,
+      "dropdown": "Social Media",
+      "notes": "Sdasda",
+      "password": "sdasd",
+      "siteName": "Pinterest",
+      "url": "Www.YouTube.com",
+      "userName": "Addasd",
+      "userId": 1
+    },
+    {
+      "id": 84,
+      "dropdown": "Social Media",
+      "notes": "Dsasa",
+      "password": "asda",
+      "siteName": "Twitter",
+      "url": "Www.twitter",
+      "userName": "Asasd",
+      "userId": 1
+    },
+    {
+      "id": 57,
+      "dropdown": "Social Media",
+      "notes": "Sdasda",
+      "password": "sdasda",
+      "siteName": "Facebook",
+      "url": "Www.facebook",
+      "userName": "Addasd",
+      "userId": 1
+    },
+    {
+      "id": 65,
+      "dropdown": "Social Media",
+      "notes": "Dasda",
+      "password": "sdasd",
+      "siteName": "Youtube",
+      "url": "Sdfdfsdf",
+      "userName": "Sdasd",
+      "userId": 2
+    },
+    {
+      "id": 70,
+      "dropdown": "Social Media",
+      "notes": "Dasdafdg",
+      "password": "sdasdyyu",
+      "siteName": "facebook",
+      "url": "Sdfdfsdf",
+      "userName": "Sdasd",
+      "userId": 3
+    }
+  ]
+}
